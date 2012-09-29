@@ -1,0 +1,20 @@
+TOP=$(shell readlink -f "$(dir $(lastword $(MAKEFILE_LIST)))")
+PROGRAM=main
+LIBDIR=$(TOP)/libs
+STMLIB=$(LIBDIR)/STM32F4xx_DSP_StdPeriph_Lib_V1.0.1/Libraries
+
+TC=arm-none-eabi
+CC=$(TC)-gcc
+LD=$(TC)-gcc
+OBJCOPY=$(TC)-objcopy
+AR=$(TC)-ar
+AS=$(TC)-as
+GDB=$(TC)-gdb
+
+INCLUDE=-I$(TOP)/inc
+INCLUDE+=-I$(STMLIB)/CMSIS/Include
+INCLUDE+=-I$(STMLIB)/CMSIS/Device/ST/STM32F4xx/Include
+INCLUDE+=-I$(STMLIB)/STM32F4xx_StdPeriph_Driver/inc
+
+COMMONFLAGS= -O0 -g -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -ffast-math
+CFLAGS+=$(COMMONFLAGS) -Wall -Werror $(INCLUDE) 
